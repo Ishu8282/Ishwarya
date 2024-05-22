@@ -1,7 +1,7 @@
 import os
 import vertexai
 
-PROJECT_ID = "tt-dev-001"  
+PROJECT_ID = "adept-rock-422908-i7"  
 LOCATION = "us-central1" 
 
 vertexai.init(project=PROJECT_ID, location=LOCATION)
