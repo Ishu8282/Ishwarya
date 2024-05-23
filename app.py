@@ -21,7 +21,15 @@ def response(chat, message):
         "top_p": 0.8,
         "top_k": 40
     }
-    result = chat.send_message(message, **parameters)
+    result = chat.send_message("""input: what are the offering in C3?
+output: There are 8 Core Offerings, which include Cloud Strategy & Governance, Cloud Security Compliance Automation, CNAPP, Cloud Security Architecture, Cloud Cryptography, Cloud IAM, Cloud Defense, and Cloud Data Privacy. Additionally, there are 6 Cross Offerings: Cloud AI Services, Cloud Transformation, Cloud Security Operate, Cloud Zero Trust, Cloud @ GPS, and Cloud @ FSI. Altogether, these comprise a total of 14 offerings.
+
+input: What services are included in Cloud Security Strategy & Governance?
+output: Services included in Cloud Security Strategy & Governance are Cloud Security Maturity Assessments, Cloud IS Management System Support, Cloud Security Risk Management, Cloud Security Policy Framework, and Cloud Security Target Operating Model (TOM)
+
+input: what are the offering in C3?
+output:
+""", **parameters)
     return result.text
 
 @app.route('/')
