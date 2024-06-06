@@ -11,7 +11,26 @@ vertexai.init(project=PROJECT_ID, location=LOCATION)
 
 def create_session():
     chat_model = ChatModel.from_pretrained("chat-bison@001")
-    chat = chat_model.start_chat()
+    chat = chat_model.start_chat(
+        context="Cloud Security Compliance Automation involves creating a tailored security controls framework aligned with specific customer requirements, including both regulatory requirements and security best practices. Translating this security controls into tangible security baselines and DevSecOps processes is a key focus. We aim to develop and implement a multi-cloud approach for automating security controls utilizing both cloud-native services from Hyperscalers as well as third party solutions like CNAPP.
+
+Our strategy includes identifying and automating technical controls in line with specified requirements, ultimately enhancing Cloud Security and compliance posture based on assessment results. The initiative also entails the automation of tasks and processes related to configuration, vulnerability scanning, log monitoring, and compliance reporting for increased efficiency and effectiveness. Our services therefore include tool selection, solution design, and implementation support for the following areas:
+
+Services
+
+• Cloud Native Application Protection Platform (CNAPP)
+• Cloud Security Posture Management (CSPM)
+• Cloud Workload Protection (CWP)
+• Compliance as Code
+• DevSecOps Tools
+• Cloud Security Compliance Reporting ",
+        examples=[
+            InputOutputTextPair(
+                input_text="What is Cloud Security Strategy & Governance? ",
+                output_text="Cloud Security Strategy & Governance helps organizations to closely link the use of cloud infrastructures and services with their existing business strategy to achieve the best possible benefits. It involves understanding the current maturity level of an organization's cloud security capabilities and deriving strategic initiatives to further improve security.",
+            ),
+        ],
+    )
     return chat
 
 def response(chat, message):
@@ -21,15 +40,7 @@ def response(chat, message):
         "top_p": 0.8,
         "top_k": 40
     }
-    result = chat.send_message("""input: what are the offering in C3?
-output: There are 8 Core Offerings, which include Cloud Strategy & Governance, Cloud Security Compliance Automation, CNAPP, Cloud Security Architecture, Cloud Cryptography, Cloud IAM, Cloud Defense, and Cloud Data Privacy. Additionally, there are 6 Cross Offerings: Cloud AI Services, Cloud Transformation, Cloud Security Operate, Cloud Zero Trust, Cloud @ GPS, and Cloud @ FSI. Altogether, these comprise a total of 14 offerings.
-
-input: What services are included in Cloud Security Strategy & Governance?
-output: Services included in Cloud Security Strategy & Governance are Cloud Security Maturity Assessments, Cloud IS Management System Support, Cloud Security Risk Management, Cloud Security Policy Framework, and Cloud Security Target Operating Model (TOM)
-
-input: what are the offering in C3?
-output:
-""", **parameters)
+    result = chat.send_message(message, **parameters)
     return result.text
 
 @app.route('/')
@@ -44,6 +55,7 @@ def vertex_palm():
     else:
         user_input = request.form['user_input']
     chat_model = create_session()
+    
     content = response(chat_model,user_input)
     return jsonify(content=content)
 
