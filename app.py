@@ -69,7 +69,7 @@ place holder Cloud Security @ GPS Cloud Security @ GPS is a cross-offering to ad
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
-    return responses
+    return responses.text
 
 @app.route('/')
 def index():
