@@ -13,7 +13,7 @@ def create_session():
 
 def response(model, message):
     generation_config = {
-        "max_output_tokens": 8192,
+        "max_output_tokens": 300,
         "temperature": 1,
         "top_p": 0.95,
     }
