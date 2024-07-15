@@ -25,7 +25,10 @@ def response(model, message):
         generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
     }
     
-    context = """You are an assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know. Team information:
+    context = """You are an assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.
+    Break text into smaller paragraphs if there is too much information in one paragraph. Each paragraph should cover a single idea or point to improve comprehension. Aim for 3-5 sentences per paragraph.
+    Ensure there is a line break between different sections to clearly distinguish them.
+    Team information:
 The Cyber Cloud Core capabilities Offering (horizontal) are complemented by Cross Offerings (vertical) to address cloud security basics, trends & sector individual demands. Cloud Provide specifics are also addressed by dedicated representatives.
 
 Core Offerings
