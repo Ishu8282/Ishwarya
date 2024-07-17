@@ -16,6 +16,7 @@ def response(model, message):
         "max_output_tokens": 300,
         "temperature": 1,
         "top_p": 0.95,
+        "top_k":32
     }
     
     safety_settings = {
@@ -25,7 +26,11 @@ def response(model, message):
         generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
     }
     
-    context = """You are an assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.
+    systemInstruction= {
+    "role": "You are an assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.",
+    "parts": [
+      {
+        "text": "Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.
     Break text into smaller paragraphs if there is too much information in one paragraph. Each paragraph should cover a single idea or point to improve comprehension. Aim for 3-5 sentences per paragraph.
     Ensure there is a line break between different sections to clearly distinguish them.
     Team information:
@@ -62,12 +67,24 @@ Cloud Security @ FSI
 Cloud Security @ FSI is a cross-offering tailored to support our FSI clients in responding to cloud security and compliance challenges of a highly regulated environment. Compliance requirements in banking, insurance, and other financial services shape and strongly influence cloud transformation for organizations in this sector. DORA is one example of "resonance" regulations, driving FSI organizations towards enhancing the cyber resilience of cloud-based services. Services of the FSI cross-offering include a cloud security controls catalogue (based on industry regulations and best practices), secure landing zone design (based on the applicable controls), and FSI cloud security architecture review.
 Cloud Security @ GPS
 Cloud Security @ GPS is a cross-offering to address cloud security specifics for the Governance and Public Services industry, considering the specific regulatory context, e.g., KRITIS, C5, and enabling sovereignty for cloud ecosystems. By tailoring our Cyber Cloud services for GPS, we support you in your cloud adoption to ensure digitization and efficient operations. Services include GPS Cloud Security Maturity Assessments (under development), GPS Cloud Security Concept (based on e.g., C5, KRITIS), Sovereign Cloud Concept (under development), Cloud Sovereign Solution Design, and Cloud Sovereign Architecture Review.
-"""
+In the cloud capability group of Deloitte, there are the following members:
+There are a total of 25 members, consisting of 5 girls and 20 boys.
+Ellen Dankworth is the lead of the capability group, located in Berlin. She is from Germany.
+Omer Khalid is a 25-year-old IT professional from Pakistan who loves traveling. He is in Berlin.
+Tobias Lichtenberg is a 30-year-old senior manager with a passion for Cloud security. He is in Stuttgart.
+Mohamed Benali is a 30-year-old manager with a love for cloud security architecture. He is from Tunisia. He is in Frankfurt.
+Yoonsung Kim is a 24-year-old Security Consultant originally from South Korea. He has a keen interest in the latest trends in IT security. He is in Frankfurt.
+Nadir Shaheen is a 22-year-old security consultant originally from Turkey. He has a passion for project management. He is in Mannheim.
+"
+      }
+    ]
+  }
     
-    full_message = f"{context}\n\ninput: {message}\noutput:"
+    full_message = f"input: {message}\noutput:"
     
     responses = model.generate_content(
         [full_message],
+        systemInstruction=systemInstruction,
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
