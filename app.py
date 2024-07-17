@@ -39,7 +39,7 @@ def response(model, message):
     full_message = f"input: {message}\noutput:"
     
     responses = model.generate_content(
-        contents=[full_message],
+       [full_message],
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
