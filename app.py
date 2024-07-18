@@ -35,6 +35,8 @@ def create_session():
     "Mohamed Benali is a 30-year-old manager with a love for cloud security architecture. He is from Tunisia. He is in Frankfurt.",
     "Yoonsung Kim is a 24-year-old Security Consultant originally from South Korea. He has a keen interest in the latest trends in IT security. He is in Frankfurt.",
     "Nadir Shaheen is a 22-year-old security consultant originally from Turkey. He has a passion for project management. He is in Mannheim.",
+    "Ishwarya is 24-years-old is a Tech lover. located in munich",
+    "Xin is a 29-years-old manager. He is security review architect. Located in Duesseldorf.",       
   ]
     )
     return model
