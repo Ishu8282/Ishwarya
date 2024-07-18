@@ -1,6 +1,6 @@
 import base64
 import vertexai
-from vertexai.generative_models import GenerativeModel, Part, FinishReason, Tool, grounding
+from vertexai.generative_models import GenerativeModel, Part, FinishReason
 import vertexai.preview.generative_models as generative_models
 from flask import Flask, request, jsonify, render_template
 import json
@@ -13,13 +13,15 @@ def create_session():
     model = GenerativeModel(
         model_name="gemini-1.5-flash-001",
         system_instruction=[
-    "You are an friendly assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.",
+    "You are an assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.",
     "Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.",
     "Break text into smaller paragraphs if there is too much information in one paragraph. Each paragraph should cover a single idea or point to improve comprehension. Aim for 3-5 sentences per paragraph.",
     "Ensure there is a line break between different sections to clearly distinguish them.",
-    "Team information: The Cyber Cloud capabilities are divided into core Offering (horizontal) complemented by Cross Offerings (vertical) to address cloud security basics, trends & sector individual demands. Cloud Provide specifics are also addressed by dedicated representatives.",
-    "Core Offerings are Cloud Defense which supports organizations increasingly move their IT operations into cloud environments. Cloud Defense supports you in uncovering potential vulnerabilities through offensive security services and provides comprehensive defense to protect your organization by the following services: Services Cloud Penetration Testing, Cloud Red Teaming, Cloud Threat Intelligence, Cloud SIEM Integration Managed Extended Detection & Response (MXDR) 24x7, Cloud SOC SOAR implementation. Cloud Data Privacy where the use of cloud technologies as part of the processing of personal data is subject to a diverse range of data privacy regulations.",
-    "Cross Offering are Cloud Zero Trust Accelerators, Cloud Zero Trust Maturity Assessment, Cloud Zero Trust Accelerators and Cloud GenAI",
+    "Team information: The Cyber Cloud Core capabilities Offering (horizontal) are complemented by Cross Offerings (vertical) to address cloud security basics, trends & sector individual demands. Cloud Provide specifics are also addressed by dedicated representatives.",
+    "Core Offerings:",
+    "Cloud Defense: As organizations increasingly move their IT operations into cloud environments and attack vectors are constantly changing, a holistic approach with integrated solutions in cyber defense is required. Cloud Defense supports you in uncovering potential vulnerabilities through offensive security services and provides comprehensive defense to protect your organization by the following services: Services Cloud Penetration Testing, Cloud Red Teaming, Cloud Threat Intelligence, Cloud SIEM Integration Managed Extended Detection & Response (MXDR) 24x7, Cloud SOC SOAR implementation.",
+    "Cloud Data Privacy: The use of cloud technologies as part of the processing of personal data is subject to a diverse range of data privacy regulations.",
+    "Cross Offering:",
     "Cloud Zero Trust Accelerators: (e.g., Vendor Solutions), Artifacts for designing, implementing, and operating Zero Trust in Hyperscaler Environments (e.g., building blocks, code, vendor solutions),",
     "Cloud Zero Trust Maturity Assessment: Assessment for the maturity of cloud zero trust aligned to global zero trust and cloud security maturity assessment.",
     "Cloud Zero Trust as a Service: Managed service running Deloitte's Zero Trust Framework for customers' (multi-) cloud environments based on Deloitte's framework.",
@@ -45,7 +47,7 @@ def load_system_instruction():
 def response(model, message):
     generation_config = {
         "max_output_tokens": 300,
-        "temperature": 0.0,
+        "temperature": 1,
         "top_p": 0.95,
         "top_k":32
     }
@@ -58,22 +60,13 @@ def response(model, message):
     }
        
     full_message = f"input: {message}\noutput:"
-
-    # Use Google Search for grounding
-    tool = Tool.from_google_search_retrieval(grounding.GoogleSearchRetrieval())
     
     responses = model.generate_content(
        [full_message],
-        tools=[tool],
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
-    print(responses.candidates[0])
-    content = responses.candidates[0].content.parts[0].text
-    
-    return {
-        "content": content,
-    }
+    return responses.text
 
 @app.route('/')
 def index():
@@ -87,8 +80,8 @@ def vertex_palm():
     else:
         user_input = request.form['user_input']
     model = create_session()
-    result = response(model, user_input)
-    return jsonify(result)
+    content = response(model, user_input)
+    return jsonify(content=content)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
