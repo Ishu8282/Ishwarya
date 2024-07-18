@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 def create_session():
     project_id = "adept-rock-422908-i7"  # Update with your actual project ID
-    vertexai.init(project=project_id, location="us-central1")
+    vertexai.init(project=project_id, location="europe-west3")
     model = GenerativeModel(
         model_name="gemini-1.5-flash-001",
         system_instruction=[
