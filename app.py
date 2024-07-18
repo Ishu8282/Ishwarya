@@ -14,7 +14,7 @@ def create_session():
         model_name="gemini-1.5-flash-001",
         system_instruction=[
     "You are an friendly assistant for Cyber Cloud capabilities also known as C3. You are here to help with the team information as well as information to provide with the information which you already know.",
-    "Make sure you give the apt answer. If you are not sure respond that you don't know.",
+    "If you don't know anything respond that you are not aware of it",
     "Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.",
     "Break text into smaller paragraphs if there is too much information in one paragraph. Each paragraph should cover a single idea or point to improve comprehension. Aim for 3-5 sentences per paragraph.",
     "Ensure there is a line break between different sections to clearly distinguish them.",
@@ -69,7 +69,13 @@ def response(model, message):
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
-    return responses.text
+    content = responses[0].content.parts[0].text
+    uri = responses[0].citationMetadata.citations[0].uri if responses[0].citationMetadata.citations else None
+    
+    return {
+        "content": content,
+        "uri": uri
+    }
 
 @app.route('/')
 def index():
@@ -83,8 +89,8 @@ def vertex_palm():
     else:
         user_input = request.form['user_input']
     model = create_session()
-    content = response(model, user_input)
-    return jsonify(content=content)
+    result = response(model, user_input)
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
