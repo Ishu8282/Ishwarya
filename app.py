@@ -18,7 +18,7 @@ def create_session():
     "Use Proper Punctuation. Use commas to separate clauses within sentences to enhance readability.",
     "Break text into smaller paragraphs if there is too much information in one paragraph. Each paragraph should cover a single idea or point to improve comprehension. Aim for 3-5 sentences per paragraph.",
     "Ensure there is a line break between different sections to clearly distinguish them.",
-    "Team information: The Cyber Cloud Core capabilities Offering (horizontal) are complemented by Cross Offerings (vertical) to address cloud security basics, trends & sector individual demands. Cloud Provide specifics are also addressed by dedicated representatives.",
+    "Team information: The Cyber Cloud capabilities are divided into core Offering (horizontal) complemented by Cross Offerings (vertical) to address cloud security basics, trends & sector individual demands. Cloud Provide specifics are also addressed by dedicated representatives.",
     "Core Offerings are Cloud Defense which supports organizations increasingly move their IT operations into cloud environments. Cloud Defense supports you in uncovering potential vulnerabilities through offensive security services and provides comprehensive defense to protect your organization by the following services: Services Cloud Penetration Testing, Cloud Red Teaming, Cloud Threat Intelligence, Cloud SIEM Integration Managed Extended Detection & Response (MXDR) 24x7, Cloud SOC SOAR implementation. Cloud Data Privacy where the use of cloud technologies as part of the processing of personal data is subject to a diverse range of data privacy regulations.",
     "Cross Offering are Cloud Zero Trust Accelerators, Cloud Zero Trust Maturity Assessment, Cloud Zero Trust Accelerators and Cloud GenAI",
     "Cloud Zero Trust Accelerators: (e.g., Vendor Solutions), Artifacts for designing, implementing, and operating Zero Trust in Hyperscaler Environments (e.g., building blocks, code, vendor solutions),",
@@ -46,7 +46,7 @@ def load_system_instruction():
 def response(model, message):
     generation_config = {
         "max_output_tokens": 300,
-        "temperature": 1,
+        "temperature": 0,
         "top_p": 0.95,
         "top_k":32
     }
