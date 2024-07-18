@@ -65,7 +65,7 @@ def response(model, message):
     
     responses = model.generate_content(
        [full_message],
-        tools=[tool]
+        tools=[tool],
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
