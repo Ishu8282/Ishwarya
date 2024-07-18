@@ -70,21 +70,9 @@ def response(model, message):
     )
     print(responses.candidates[0])
     content = responses.candidates[0].content.parts[0].text
-    uris = []
-    if responses.candidates and responses.candidates[0].grounding_metadata.grounding_attributions:
-        # Iterate over grounding_attributions to find the URI
-        for attribution in responses.candidates[0].grounding_metadata.grounding_attributions:
-            if attribution.HasField("web") and attribution.web.HasField("uri"):
-                uris.append(attribution.web.uri)
-                break
-        else:
-            uri = None
-    else:
-        uri = None
     
     return {
         "content": content,
-        "uri": uris if uris else None
     }
 
 @app.route('/')
