@@ -69,8 +69,8 @@ def response(model, message):
         generation_config=generation_config,
         safety_settings=safety_settings,
     )
-    content = responses[0].content.parts[0].text
-    uri = responses[0].citationMetadata.citations[0].uri if responses[0].citationMetadata.citations else None
+    content = responses.candidates[0].content.parts[0].text
+    uri = responses.candidates[0].citationMetadata.citations[0].uri if responses.candidates[0].citationMetadata.citations else None
     
     return {
         "content": content,
