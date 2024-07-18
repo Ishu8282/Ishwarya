@@ -71,7 +71,7 @@ def response(model, message):
     )
     print(responses.candidates[0])
     content = responses.candidates[0].content.parts[0].text
-    uri = responses.candidates[0].citationMetadata.citations[0].uri if responses.candidates[0].citationMetadata.citations else None
+    uri = responses.candidates[0].grounding_metadata.grounding_attributions.web.uri if responses.candidates[0].grounding_metadata.grounding_attributions else None
     
     return {
         "content": content,
