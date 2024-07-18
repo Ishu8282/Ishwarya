@@ -84,7 +84,7 @@ def vertex_palm():
         user_input = request.form['user_input']
     model = create_session()
     content = response(model, user_input)
-    return content=content
+    return (content=content)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
